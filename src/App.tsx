@@ -8,7 +8,7 @@ import './styles/global.css';
 export function App() {
   return (
     <>
-      <Heading attr1='String' attr2={123}>
+      <Heading>
         Hello World! How is it going?
       </Heading>
       <p>
