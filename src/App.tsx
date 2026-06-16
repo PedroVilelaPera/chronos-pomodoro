@@ -17,6 +17,19 @@ export function App() {
       <Container>
         <CountDown />
       </Container>
+      <Container>
+        <form className='form' action=''>
+          <div className='formRow'>
+          </div>
+          <div className='formRow'>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+          <div className='formRow'>
+          </div>
+          <div className='formRow'>
+          </div>
+        </form>
+      </Container>
       </Container>
     </>
   );
