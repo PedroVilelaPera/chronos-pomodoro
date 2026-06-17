@@ -1,20 +1,77 @@
-import { HouseIcon, HistoryIcon, SettingsIcon, SunIcon } from 'lucide-react';
+import {
+  HouseIcon,
+  HistoryIcon,
+  SettingsIcon,
+  SunIcon,
+  MoonIcon,
+} from 'lucide-react';
+import { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
+type AvailableThemes = 'dark' | 'light';
+
 export function Menu() {
+  const [theme, setTheme] = useState<AvailableThemes>(() => {
+    const storageTheme =
+      (localStorage.getItem('theme') as AvailableThemes) || 'dark';
+    return storageTheme;
+  });
+
+  function handleThemeChange(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) {
+    event.preventDefault();
+
+    setTheme(prevTheme => {
+      const nextTheme = prevTheme === 'dark' ? 'light' : 'dark';
+      return nextTheme;
+    });
+  }
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const nextThemeIcon = {
+    dark: <SunIcon />,
+    light: <MoonIcon />,
+  };
+
   return (
     <nav className={styles.menu}>
-      <a className={styles.menuButton} href='#'>
+      <a
+        className={styles.menuButton}
+        href='#'
+        aria-label='Ir para a Home'
+        title='Ir para a Home'
+      >
         <HouseIcon />
       </a>
-      <a className={styles.menuButton} href='#'>
+      <a
+        className={styles.menuButton}
+        href='#'
+        aria-label='Ver Histórico'
+        title='Ver Histórico'
+      >
         <HistoryIcon />
       </a>
-      <a className={styles.menuButton} href='#'>
+      <a
+        className={styles.menuButton}
+        href='#'
+        aria-label='Alterar Configurações'
+        title='Alterar Configurações'
+      >
         <SettingsIcon />
       </a>
-      <a className={styles.menuButton} href='#'>
-        <SunIcon />
+      <a
+        className={styles.menuButton}
+        href='#'
+        aria-label='Mudar Tema'
+        title='Mudar Tema'
+        onClick={handleThemeChange}
+      >
+        {nextThemeIcon[theme]}
       </a>
     </nav>
   );
